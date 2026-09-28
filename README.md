@@ -91,6 +91,7 @@ arabic-subtitling-guidelines/
 - [Limitations & Known Constraints (حدود الاستخدام والقيود)](#limitations--known-constraints-حدود-الاستخدام-والقيود)
 - [Manual QC Checklist](#manual-qc-checklist)
 - [References & Authoritative Sources](#references--authoritative-sources)
+- [Author & Maintainer (المؤلف)](#author--maintainer--المؤلف)
 
 ---
 
@@ -355,3 +356,11 @@ While this repository and toolset provide an industry-grade standard for Arabic 
 5. [Timed Text Style Guide: Product Supplemental & Marketing Assets](https://partnerhelp.netflixstudios.com/hc/en-us/articles/115000239632-Timed-Text-Style-Guide-Product-Supplemental-Marketing-Assets)
 6. [Arabic Timed Text Style Guide](https://partnerhelp.netflixstudios.com/hc/en-us/articles/215517947-Arabic-Timed-Text-Style-Guide)
 7. Pedersen, J. (2017). *The FAR model: assessing quality in interlingual subtitling*. The Journal of Specialised Translation, (28), 210–229. [https://doi.org/10.26034/cm.jostrans.2017.239](https://doi.org/10.26034/cm.jostrans.2017.239)
+
+---
+
+## Author & Maintainer / المؤلف
+
+- **Dawood Saleh (داود صالح)**
+- **Website**: [engdawood.com](https://engdawood.com)
+- **GitHub**: [@EngDawood](https://github.com/EngDawood)

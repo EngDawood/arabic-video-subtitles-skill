@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Arabic subtitling, closed captioning (SDH), and QC guidelines conforming to Netflix Timed Text Style Guide (Dec 2025 updates) with automated checking tooling.",
   "author": {
-    "name": "EngDawood"
+    "name": "Dawood Saleh",
+    "url": "https://engdawood.com"
   },
   "defaultEnabled": true,
   "keywords": [
