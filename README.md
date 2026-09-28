@@ -88,6 +88,7 @@ arabic-subtitling-guidelines/
 - [Automated QC Tool (`scripts/check_subtitles.py`)](#automated-qc-tool-scriptscheck_subtitlespy)
 - [The FAR Quality Model (Pedersen, 2017)](#the-far-quality-model-pedersen-2017)
 - [RTL & Technical Considerations](#rtl--technical-considerations)
+- [Limitations & Known Constraints (حدود الاستخدام والقيود)](#limitations--known-constraints-حدود-الاستخدام-والقيود)
 - [Manual QC Checklist](#manual-qc-checklist)
 - [References & Authoritative Sources](#references--authoritative-sources)
 
@@ -306,6 +307,30 @@ $$\text{Error Score per 100 Subtitles} = \left( \frac{\text{Total Penalty Points
 - **UTF-8 Encoding**: Always save files in UTF-8 without BOM.
 - **BiDi Punctuation Bugs**: If a video player incorrectly places trailing punctuation on the right side of an RTL sentence, prepend or append the Unicode **Right-to-Left Mark (RLM)** (`U+200F`).
 - **Font Rendering**: For burned-in subtitles, use fonts with comprehensive Arabic shaping support (e.g. *Noto Sans Arabic*, *Geeza Pro*, *Arial*), ensuring sufficient line height so harakat do not overlap.
+
+---
+
+## Limitations & Known Constraints (حدود الاستخدام والقيود)
+
+While this repository and toolset provide an industry-grade standard for Arabic subtitling, users and localization teams should keep the following limitations in mind:
+
+### 1. Modern Standard Arabic (MSA) vs. Dialects
+- **Strict MSA Scope**: The Netflix TTSG specifications implemented here strictly mandate Modern Standard Arabic (*الفصحى*) and prohibit dialectal forms. 
+- **Casual & Social Media Platforms**: For informal media (e.g., YouTube vlogs, TikTok, Instagram Reels) or comedy/drama where local Arabic dialects (Egyptian, Levantine, Gulf, etc.) are central to characterization, these rules should be selectively relaxed according to client or editorial preference.
+
+### 2. Automated Script Limitations (`check_subtitles.py`)
+- **Video & Audio Agnostic**: The Python checker parses only subtitle text and timestamps (`.srt` / `.vtt`). It **does not inspect video or audio streams**. Therefore, it cannot detect shot changes, scene transitions, or exact audio speech boundaries without an external video analysis pipeline.
+- **Syntactic & Semantic Review**: The script verifies typographical patterns, line counts, character limits, duration, and reading speeds via regex, but **cannot evaluate translation accuracy, semantic meaning, or grammatical correctness** (*إعراب*). Human review or an LLM pass is still required.
+- **Scope of `--fix`**: The automatic fixer only resolves mechanical issues (replacing `...` with `…`, fixing spaces before punctuation, converting Western punctuation in Arabic text, and stripping `<i>` tags). It **cannot automatically re-break sentences or rephrase lines** to reduce high reading speeds.
+
+### 3. Subtitle Format Constraints (SRT/VTT vs. TTML/IMSC1.1)
+- **Formatting & Positioning**: Open formats like SRT and basic WebVTT do not support the advanced percentage-based positioning, vertical safe areas, or font color styling mandated by full broadcast deliveries (e.g., Netflix delivery packages). Official master deliverables for Netflix require TTML / IMSC1.1.
+
+### 4. Player-Dependent BiDi Rendering
+- **Player Inconsistencies**: Different desktop players (VLC, QuickTime, Windows Media Player) and web video players handle bidirectional (BiDi) text algorithms differently. Trailing punctuation or embedded Latin terms may flip depending on player software. Always test rendered output in the target client's playback environment.
+
+### 5. Proprietary Studio Assets
+- **Internal Studio Glossaries**: Proprietary assets from Netflix (such as the private Glyph List, internal Key Names and Places / KNP database, and private profanity tables) are protected studio assets and cannot be redistributed.
 
 ---
 
