@@ -1,18 +1,17 @@
-
+---
 name: arabic-subtitling-guidelines
-
-description: Guidelines and QC tooling for adding Arabic subtitles or captions to video - Arabic-to-Arabic captions (transcription, SDH) and translated subtitles (English or other language into Modern Standard Arabic). Covers Netflix Timed Text Style Guide rules (42 chars/line, 2 lines, reading speed, timing/gaps/shot changes, numbers, quotes, ellipses, diacritics, songs, forced narratives), translation strategies for cultural references, and an SRT/VTT checker script. Use this skill whenever the user wants Arabic subtitles, captions, ترجمة فيديو, ترجمة مرئية, تفريغ نصي, تسميات توضيحية, SRT/VTT/TTML files, burning captions into a video, translating a video transcript to Arabic, or reviewing/fixing existing Arabic subtitles - even if they never say "Netflix" or "style guide"
+description: Guidelines and QC tooling for adding Arabic subtitles or captions to video - Arabic-to-Arabic captions (transcription, SDH) and translated subtitles (English or other language into Modern Standard Arabic). Covers Netflix Timed Text Style Guide rules (42 chars/line, 2 lines, reading speed, timing/gaps/shot changes, numbers, quotes, ellipses, diacritics, songs, forced narratives), translation strategies for cultural references, and an SRT/VTT checker script. Use this skill whenever the user wants Arabic subtitles, captions, ترجمة فيديو, ترجمة مرئية, تفريغ نصي, تسميات توضيحية, SRT/VTT/TTML files, burning captions into a video, translating a video transcript to Arabic, or reviewing/fixing existing Arabic subtitles - even if they never say "Netflix" or "style guide".
 ---
 
 # Arabic subtitling and captioning guidelines
 
-Rules and workflow for producing Arabic subtitles that read like professional work. The baseline standard is the Netflix Timed Text Style Guide (TTSG) for Arabic, because it is the most detailed public specification. Loosen it for casual platforms; do not invent stricter rules than the source.
+Rules and workflow for producing Arabic subtitles that read like professional work. The baseline standard is the Netflix Timed Text Style Guide (TTSG) for Arabic (incorporating the December 2025 updates). Loosen it for casual platforms; do not invent stricter rules than the source.
 
 ## Pick the mode first
 
 | Mode | Input -> output | Extra concerns |
 |---|---|---|
-| **A. Arabic captions** | Arabic speech -> Arabic text (same language) | Faithful transcription, MSA vs dialect, SDH sound cues if requested |
+| **A. Arabic captions** | Arabic speech -> Arabic text (same language) | Faithful transcription, MSA vs dialect, SDH sound cues in MSA if requested |
 | **B. Translated subtitles** | Other language speech -> Arabic text | Translation strategy, cultural references, condensing for reading speed |
 | **C. Review / fix** | Existing SRT/VTT/TTML | Run the checker, then fix by rule |
 
@@ -28,32 +27,40 @@ If the user does not say, infer from the request. Ask one short question only wh
 6. **Run the checker:** `python scripts/check_subtitles.py file.srt --fps 24` and fix errors. Use `--fix out.srt` for the mechanical ones, then re-check. Mechanical timing fixes do not know about audio or shot changes, so review them.
 7. **Manual QC pass** with the checklist at the end. Report anything you could not verify.
 
-## Cheat sheet (Netflix Arabic TTSG)
+## Cheat sheet (Netflix Arabic TTSG - Dec 2025 Updates)
 
-**Language**
+**Language & Vocabulary**
 - MSA only. No dialect words (the guide's examples: برجاء، يا خبر، يا ستّار). Where MSA has no equivalent, use the closest-meaning word.
-- Translate place names and currencies to Arabic forms (المكسيك، أثينا، اليورو، البيزو). Never convert currency values.
-- Proper/character names: transliterate, first name before last name. Nicknames: transliterate unless the meaning matters to the plot.
-- Do not translate onomatopoeia ("wow", "ouch") in subtitles; do not translate fillers ("just", "really", "you know") unless they add meaning. Do not reproduce deliberate mispronunciations unless plot-relevant.
+- Translate place names and currencies to standard Arabic forms (المكسيك، أثينا، اليورو، البيزو). Never convert currency values mathematically.
+- Proper/character names: transliterate phonetically (First name then Last name). Nicknames: transliterate unless the meaning matters to the plot.
+- **Translation vs. Transliteration**:
+  - Prioritize established Arabic equivalents.
+  - If a term lacks an Arabic equivalent or is rarely used, transliterate within double quotes (`"..."`).
+  - Omit quotes for transliterated terms widely adopted into common usage that accept standard Arabic plurals (راديو / راديوهات).
+- **Acronyms & Abbreviations**:
+  - Translate widely known acronyms (CIA -> الوكالة المركزية للاستخبارات).
+  - Transliterate familiar phonetic acronyms as uttered (OPEC -> أوبك, UNICEF -> يونيسف).
+  - SI unit abbreviations (`ص`, `م`, `ملم`, `كغ`) take a space and **no period** (`5 كغ` not `5 كغ.`).
+- Do not translate onomatopoeia ("wow", "ouch") in subtitles; do not translate fillers ("just", "really", "you know") unless they add meaning.
 - Never censor; render profanity faithfully without adding obscenity the source lacks.
 - No italics at all in Arabic.
 
 **Layout**
 - Max 42 characters per line, max 2 lines, prefer bottom-heavy two-liners, avoid a single word alone on line 2.
 - Do not break a line between: verb and subject, particle and verb, adjective and noun, mudaf and mudaf ilayh, exception particle and excepted, vocative particle and vocative, preposition and its noun, number and counted noun.
-- Dual speakers: hyphen + space at the start of each line, one speaker per line, each line a self-contained sentence.
+- Dual speakers: hyphen + space (`- `) at the start of each line, one speaker per line, each line a self-contained sentence.
 - Font placeholder Arial-like sans-serif, white, size that fits 42 characters.
 
 **Timing**
 - Duration per event: min 5/6 s (20 frames at 24 fps), max 7 s.
 - Reading speed: adults up to 20 chars/s, children up to 17 (SDH: 23 and 20).
 - Min gap 2 frames. At 24 fps, gaps of 3-11 frames must be closed to 2; gaps are either 2 frames or >= half a second.
-- In-time within 1-2 frames of first audio. If no subtitle follows, out-time about half a second after audio ends. Avoid crossing shot changes unless the dialogue crosses them.
+- In-time within 1-2 frames of first audio. If no subtitle follows, out-time about half a second after audio ends. Avoid crossing shot changes unless dialogue crosses them.
 
 **Punctuation and symbols**
-- Ellipsis is the single character U+2026, never three dots. Use it for trailing off, interruption, pauses of 2 s or more, and a sentence interrupted by another speaker/FN (before and after the interruption). Do not put an ellipsis or dash between two subtitles when a sentence simply continues.
+- Ellipsis is the single character `…` (U+2026), never three dots. Use it for trailing off, interruption, pauses of 2 s or more, and a sentence interrupted by another speaker/FN. Do not put an ellipsis or dash between two subtitles when a sentence simply continues.
 - No space before comma, question mark, exclamation mark. Never `?!` or `!?`. Repeat the conjunction instead of using a comma between list items (المدونون والمترجمون والمترجمون الشفويون).
-- Quotes: straight double quotes, no inner spaces; one opening at the start of the quotation and one closing at its end, not per subtitle. Add kashida before the quote when ال precedes it (الـ"برونكس"). Use quotes for song titles/lyrics, transliterated names in SDH cues, and when characters read aloud.
+- Quotes: straight double quotes, no inner spaces; one opening at the start of the quotation and one closing at its end, not per subtitle. Add kashida before the quote when ال precedes it (الـ"برونكس").
 - Hashtags/emails/websites: no Latin letters. Transliterate or use وسم/هاشتاغ; on-screen ones become "على الموقع/البريد الإلكتروني الظاهر على الشاشة".
 
 **Numbers**
@@ -62,26 +69,28 @@ If the user does not say, infer from the request. Ask one short question only wh
 - Thousands separator comma (1,234), no comma in years (1940), decimal point with leading zero (0.5).
 - Percent spelled out; currency spelled out; time on a 12-hour basis with Arabic day-part words; Gregorian month names (أغسطس not آب); metric units unless plot-relevant.
 
-**Diacritics** only where their absence changes meaning (shadda in شابّ/شابَ, passive verbs, feminine plural nun, ya of the speaker, etc.). Tanween fatha goes on the letter before the alef for Netflix rendering reasons.
+**Diacritics**
+- Use only where absence changes meaning (shadda in شابّ/شابَ, passive verbs, feminine plural nun, ya of the speaker). Tanween fatha goes on the letter before the alef (كتابًا) for rendering compatibility.
 
 **Forced narratives (on-screen text) and foreign speech**
 - Subtitle on-screen text only if plot-relevant and not already covered in dialogue; put it in straight double quotes; never mix it with dialogue in one event; time it to the on-screen text.
 - Translate foreign dialogue only if the viewer was meant to understand it. For Arabic-language content, only full foreign sentences get an FN, not single words like "Hello".
 
-**SDH** (only if requested): square brackets for sound/speaker cues, lowercase except proper nouns, indefinite form for sounds ([زقزقة عصافير]), ♪ with spaces around lyrics, higher reading-speed limits, cues in MSA even in dialect content.
+**SDH** (only if requested)
+- Square brackets for sound/speaker cues `[...]`, indefinite form for sounds ([زقزقة عصافير]), ♪ with spaces around lyrics (`♪ ... ♪`).
+- Cues must be exclusively in MSA even in dialect content.
 
-## Handling conflicts and gaps in the sources
+## Handling conflicts and technical delivery
 
-- The Arabic TTSG overrides other Netflix guides for Arabic. Where the English template guide says hyphen without space for dual speakers, Arabic says hyphen + space.
-- The timing guide says 20 frames minimum and calls it "4/5 s"; 20 frames at 24 fps is 5/6 s, which matches the General Requirements. Use 5/6 s.
-- Netflix delivers TTML with percentage-based positioning; SRT/VTT cannot express all of it. If the user needs Netflix delivery, say so and follow the General Requirements technical section (`references/netflix-arabic-rules.md`).
-- Not verified: the Arabic transliteration/translation guideline and profanity guideline pages (linked from the Arabic TTSG) and the Netflix Glyph List could not be fetched. Tell the user these were not applied; for profanity or unusual transliteration, ask them to check those pages.
+- The Arabic TTSG overrides other Netflix guides for Arabic (e.g. Arabic requires hyphen + space for dual speakers).
+- The timing guide specifies 20 frames minimum (5/6 s at 24 fps).
+- Netflix delivers TTML with percentage-based positioning; SRT/VTT cannot express all positioning. Follow technical requirements in `references/netflix-arabic-rules.md`.
 
 ## RTL practicalities
 
-- Save as UTF-8. Some players show a trailing period on the wrong side; prefix each line with U+200F (RLM) if needed, and test in the target player. This is general practice, not a Netflix rule.
+- Save as UTF-8. Some players show a trailing period on the wrong side; prefix each line with U+200F (RLM) if needed, and test in the target player.
 - Subtitle editors need right-to-left mode on or punctuation will look wrong.
-- For burned-in video, pick a font with full Arabic shaping support; check that diacritics do not collide between the two lines.
+- For burned-in video, pick a font with full Arabic shaping support; check that diacritics do not collide between lines.
 
 ## QC checklist (manual)
 
@@ -96,6 +105,6 @@ For scoring translated work (students or vendors), use the FAR model in `referen
 
 ## Reference files
 
-- `references/netflix-arabic-rules.md` - full rule set: Arabic TTSG, General Requirements, Timing Guidelines, Template/pivot notes, Product Supplemental notes. Read when a case is not covered by the cheat sheet.
-- `references/translation-strategies.md` - strategies for culture-bound references, common student errors, FAR quality model, based on a study of student subtitling of Wednesday. Read for mode B and for evaluating translations.
-- `scripts/check_subtitles.py` - checker/fixer for SRT and VTT. Run with `--help`.
+- `references/netflix-arabic-rules.md` - full rule set: Arabic TTSG (Dec 2025 updates), General Requirements, Timing Guidelines, Template/pivot notes, Product Supplemental notes.
+- `references/translation-strategies.md` - strategies for culture-bound references, common student errors, FAR quality model (Pedersen 2017).
+- `scripts/check_subtitles.py` - automated checker and fixer for SRT and VTT. Run with `python scripts/check_subtitles.py --help`.
