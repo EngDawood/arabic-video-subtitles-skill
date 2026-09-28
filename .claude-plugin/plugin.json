@@ -1,0 +1,19 @@
+{
+  "name": "arabic-subtitling",
+  "version": "1.0.0",
+  "description": "Arabic subtitling, closed captioning (SDH), and QC guidelines conforming to Netflix Timed Text Style Guide (Dec 2025 updates) with automated checking tooling.",
+  "author": {
+    "name": "EngDawood"
+  },
+  "defaultEnabled": true,
+  "keywords": [
+    "arabic",
+    "subtitles",
+    "captioning",
+    "timed-text",
+    "netflix-ttsg",
+    "qc",
+    "srt",
+    "vtt"
+  ]
+}

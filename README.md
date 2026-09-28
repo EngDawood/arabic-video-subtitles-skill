@@ -3,7 +3,50 @@
 
 Comprehensive guidelines, stylistic rules, quality control standards, and automated QC tooling for Arabic subtitling, closed captioning, and SDH (Subtitles for the Deaf and Hard of Hearing).
 
-This repository adapts industry-grade specifications—primarily the **Netflix Timed Text Style Guide (TTSG) for Arabic** (including the **December 2025 updates**)—tailored for professional streaming delivery, educational media, social platforms (YouTube, TikTok), and automated subtitling pipelines.
+This repository adheres to industry-grade specifications—primarily the **Netflix Timed Text Style Guide (TTSG) for Arabic** (incorporating the **December 2025 updates**)—tailored for professional streaming delivery, educational media, social platforms (YouTube, TikTok), and automated AI subtitling workflows.
+
+It is packaged as both a **Universal Agent Skill** (installable via `npx skills add`) and a **Claude Code Plugin** (with custom slash commands).
+
+---
+
+## Installation & Setup
+
+### Option 1: Install as a Universal Agent Skill (`npx skills`)
+Install into AI coding agents (Claude Code, Cursor, Windsurf, GitHub Copilot) with one command:
+
+```bash
+# Add to current project
+npx skills add EngDawood/arabic-video-subtite-skill
+
+# Add globally to user configuration (~/.agents/skills/)
+npx skills add EngDawood/arabic-video-subtite-skill -g
+
+# Target specific agents
+npx skills add EngDawood/arabic-video-subtite-skill -a claude-code -a cursor -g
+```
+
+---
+
+### Option 2: Use as a Claude Code Plugin
+
+#### A. Run Directly in Current Session (Local Development)
+Load the plugin directly from the project directory:
+```bash
+claude --plugin-dir /path/to/arabic-subtitling-guidelines
+```
+
+#### B. Permanent Installation via Marketplace
+```bash
+# Add repository as a marketplace source
+claude plugin marketplace add EngDawood/arabic-video-subtite-skill
+
+# Install the plugin
+claude plugin install arabic-subtitling@EngDawood/arabic-video-subtite-skill
+```
+
+#### Available Slash Commands in Claude Code:
+- `/check-subtitles <file.srt>`: Runs automated QC verification and linguistic audits on your subtitle file.
+- `/translate-subtitles <dialogue>`: Translates and adapts dialogue into Modern Standard Arabic compliant with the 42 CPR limit and ECR translation strategies.
 
 ---
 
@@ -11,13 +54,20 @@ This repository adapts industry-grade specifications—primarily the **Netflix T
 
 ```text
 arabic-subtitling-guidelines/
-├── SKILL.md                              # Main agent skill definition (instructions & triggers)
-├── README.md                             # Comprehensive project documentation (bilingual)
-├── references/
-│   ├── netflix-arabic-rules.md           # Full Netflix Arabic TTSG, General Requirements & Timing specs
-│   └── translation-strategies.md         # Cultural reference strategies (ECRs), condensation & FAR Model
-└── scripts/
-    └── check_subtitles.py                # Standalone CLI tool to check & fix SRT/VTT subtitle files
+├── .claude-plugin/
+│   └── plugin.json                       # Claude Code plugin manifest
+├── commands/                             # Claude Code slash commands
+│   ├── check-subtitles.md                # /check-subtitles command
+│   └── translate-subtitles.md            # /translate-subtitles command
+├── skills/
+│   └── arabic-subtitling-guidelines/     # Universal Agent Skill bundle
+│       ├── SKILL.md                      # Agent instructions & prompt triggers
+│       ├── references/
+│       │   ├── netflix-arabic-rules.md   # Full Netflix Arabic TTSG (Dec 2025 updates)
+│       │   └── translation-strategies.md # ECR strategies, condensation & FAR Model
+│       └── scripts/
+│           └── check_subtitles.py        # Automated Python QC & autofix script
+└── README.md                             # Documentation & reference manual
 ```
 
 ---
@@ -69,7 +119,7 @@ Determine the project mode before starting work:
 5. **Time & Synchronize**:
    - Align in-time with speech onset; respect shot cuts and minimum gap rules (2 frames).
 6. **Automated Verification**:
-   - Run `python scripts/check_subtitles.py file.srt --fps 24`.
+   - Run `python skills/arabic-subtitling-guidelines/scripts/check_subtitles.py file.srt --fps 24`.
    - Optionally apply mechanical auto-fixes with `--fix output.srt`.
 7. **Manual QC Pass**:
    - Score against the FAR Model and review for BiDi rendering quirks.
@@ -197,13 +247,13 @@ This repository provides an automated Python CLI tool to validate `.srt` and `.v
 
 ```bash
 # Check subtitle file against standard Netflix parameters (24 FPS, 42 CPR, 20 CPS)
-python scripts/check_subtitles.py subtitles.srt --fps 24
+python skills/arabic-subtitling-guidelines/scripts/check_subtitles.py subtitles.srt --fps 24
 
 # Check WebVTT file with custom reading speed and line length
-python scripts/check_subtitles.py subtitles.vtt --max-cpr 40 --max-cps 17
+python skills/arabic-subtitling-guidelines/scripts/check_subtitles.py subtitles.vtt --max-cpr 40 --max-cps 17
 
 # Automatically fix mechanical errors (ellipses, Arabic punctuation, strip italics)
-python scripts/check_subtitles.py subtitles.srt --fix fixed_subtitles.srt
+python skills/arabic-subtitling-guidelines/scripts/check_subtitles.py subtitles.srt --fix fixed_subtitles.srt
 ```
 
 ### Checks Performed:
@@ -247,7 +297,7 @@ $$\text{Error Score per 100 Subtitles} = \left( \frac{\text{Total Penalty Points
 - **$5.1 - 10.0$**: Minor Revisions Required
 - **$> 15.0$**: Unacceptable (Fail / Re-translate)
 
-*See [references/translation-strategies.md](references/translation-strategies.md) for full details and examples.*
+*See [references/translation-strategies.md](skills/arabic-subtitling-guidelines/references/translation-strategies.md) for full details and examples.*
 
 ---
 
