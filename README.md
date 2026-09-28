@@ -16,13 +16,13 @@ Install into AI coding agents (Claude Code, Cursor, Windsurf, GitHub Copilot) wi
 
 ```bash
 # Add to current project
-npx skills add EngDawood/arabic-video-subtite-skill
+npx skills add EngDawood/arabic-video-subtitles-skill
 
 # Add globally to user configuration (~/.agents/skills/)
-npx skills add EngDawood/arabic-video-subtite-skill -g
+npx skills add EngDawood/arabic-video-subtitles-skill -g
 
 # Target specific agents
-npx skills add EngDawood/arabic-video-subtite-skill -a claude-code -a cursor -g
+npx skills add EngDawood/arabic-video-subtitles-skill -a claude-code -a cursor -g
 ```
 
 ---
@@ -38,10 +38,10 @@ claude --plugin-dir /path/to/arabic-subtitling-guidelines
 #### B. Permanent Installation via Marketplace
 ```bash
 # Add repository as a marketplace source
-claude plugin marketplace add EngDawood/arabic-video-subtite-skill
+claude plugin marketplace add EngDawood/arabic-video-subtitles-skill
 
 # Install the plugin
-claude plugin install arabic-subtitling@EngDawood/arabic-video-subtite-skill
+claude plugin install arabic-subtitling@EngDawood/arabic-video-subtitles-skill
 ```
 
 #### Available Slash Commands in Claude Code:
