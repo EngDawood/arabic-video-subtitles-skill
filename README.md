@@ -92,6 +92,7 @@ arabic-subtitling-guidelines/
 - [Manual QC Checklist](#manual-qc-checklist)
 - [References & Authoritative Sources](#references--authoritative-sources)
 - [Author & Maintainer (المؤلف)](#author--maintainer--المؤلف)
+- [License (الترخيص)](#license--الترخيص)
 
 ---
 
@@ -364,3 +365,10 @@ While this repository and toolset provide an industry-grade standard for Arabic 
 - **Dawood Saleh (داود صالح)**
 - **Website**: [engdawood.com](https://engdawood.com)
 - **GitHub**: [@EngDawood](https://github.com/EngDawood)
+
+---
+
+## License / الترخيص
+
+This project, its guidelines, and tools are licensed under the [MIT License](LICENSE).
+Copyright &copy; 2026 Dawood Saleh.
